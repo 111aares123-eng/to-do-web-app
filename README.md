@@ -19,7 +19,7 @@ A full-stack web app to manage daily tasks built with Python, Flask, and SQLite.
 ## How to Run
 
 1. Clone the repository
-   git clone https://github.com/yourusername/todo-app.git
+   git clone https://github.com/111aares123-eng/todo-app.git
    cd todo-app
 
 2. Install Flask
