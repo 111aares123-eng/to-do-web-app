@@ -41,6 +41,6 @@ todo-app/
 
 ## Team
 
-- Your Name — database.py
-- Friend 1 Name — app.py  
-- Friend 2 Name — index.html
+- Aares — database.py
+- Gautham — app.py  
+- Gautham — index.html
