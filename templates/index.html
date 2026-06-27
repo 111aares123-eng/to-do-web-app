@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        color: #1f2937;
+        margin: 0;
+        padding: 2rem;
+      }
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      }
+      h1 {
+        margin-top: 0;
+      }
+      form.add-form {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+      input[type="text"] {
+        flex: 1;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+      }
+      button {
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #2563eb;
+        color: white;
+      }
+      .section {
+        margin-top: 1.5rem;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .actions form {
+        display: inline;
+      }
+      .done {
+        text-decoration: line-through;
+        color: #6b7280;
+      }
+      .muted {
+        color: #6b7280;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Simple To-Do App</h1>
+      <form class="add-form" action="{{ url_for('add') }}" method="post">
+        <input type="text" name="title" placeholder="What needs to be done?" required />
+        <button type="submit">Add Task</button>
+      </form>
+
+      <div class="section">
+        <h2>Pending</h2>
+        {% if pending_tasks %}
+        <ul>
+          {% for task in pending_tasks %}
+          <li>
+            <span>{{ task['title'] }}</span>
+            <div class="actions">
+              <form action="{{ url_for('complete', task_id=task['id']) }}" method="post">
+                <button type="submit">Complete</button>
+              </form>
+              <form action="{{ url_for('delete', task_id=task['id']) }}" method="post">
+                <button type="submit">Delete</button>
+              </form>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="muted">No pending tasks.</p>
+        {% endif %}
+      </div>
+
+      <div class="section">
+        <h2>Completed</h2>
+        {% if completed_tasks %}
+        <ul>
+          {% for task in completed_tasks %}
+          <li>
+            <span class="done">{{ task['title'] }}</span>
+            <div class="actions">
+              <form action="{{ url_for('undo', task_id=task['id']) }}" method="post">
+                <button type="submit">Undo</button>
+              </form>
+              <form action="{{ url_for('delete', task_id=task['id']) }}" method="post">
+                <button type="submit">Delete</button>
+              </form>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="muted">No completed tasks yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
